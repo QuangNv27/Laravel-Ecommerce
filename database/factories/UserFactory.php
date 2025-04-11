@@ -4,12 +4,18 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
  */
 class UserFactory extends Factory
 {
+    /**
+     * The current password being used by the factory.
+     */
+    protected static ?string $password;
     /**
      * Define the model's default state.
      *
@@ -19,13 +25,25 @@ class UserFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'email' => $this->faker->unique()->safeEmail, // Đảm bảo email luôn unique
-            'password' => Hash::make('password'), // Mật khẩu mặc định "password"
+            'email' => $this->faker->unique()->safeEmail(), // Đảm bảo email luôn unique
+            'password' => static::$password ??=Hash::make('password'), // Mật khẩu mặc định "password"
             'phone' => $this->faker->optional()->phoneNumber,
             'address' => $this->faker->optional()->address,
-            'role' => $this->faker->randomElement(['admin', 'customer']),
+            'role' => $this->faker->randomElement(['admin', 'client']),
+            'status'=>1,
+            'email_verified_at' => now(),
+            'remember_token' => Str::random(10),
             'created_at' => now(),
             'updated_at' => now(),
         ];
+    }
+    /**
+     * Indicate that the model's email address should be unverified.
+     */
+    public function unverified(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'email_verified_at' => null,
+        ]);
     }
 }

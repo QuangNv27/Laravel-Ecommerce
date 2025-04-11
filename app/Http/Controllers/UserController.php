@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::select('id', 'name', 'email', 'role')->get();
+        // $users = User::select('id', 'name', 'email', 'role')->get();
+        $users = User::paginate(15);
         return view('admin.users.index', compact('users'));
     }
 
@@ -54,13 +56,19 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        // dd($request->all());
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'role' => 'required|in:admin,user',
+            // 'name' => 'required',
+            // 'email' => 'required|email',
+            'role' => 'required|in:admin,customer',
+            'status' => 'required|in:0,1',
         ]);
 
-        $user->update($request->only('name', 'email', 'role'));
+        $user->update($request->only(
+            // 'name', 'email', 
+            'role',
+            'status',
+        ));
 
         return redirect()->route('users.index')->with('success', 'Cập nhật thành công!');
     }

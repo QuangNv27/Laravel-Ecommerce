@@ -23,34 +23,36 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-                // ✅ Tạo tài khoản admin + user
-                User::factory(5)->create(); // 5 tài khoản ngẫu nhiên
+        User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password'=>12121212,
+            'role'=>'admin',
+        ]);
+        // ✅ Tạo tài khoản admin + user
+        User::factory(5)->create(); // 5 tài khoản ngẫu nhiên
+
+        // ✅ Tạo danh mục sản phẩm
+        Category::factory(3)->create(); // 3 danh mục sản phẩm
         
-                // ✅ Tạo danh mục sản phẩm
-                Category::factory(3)->create(); // 3 danh mục sản phẩm
-                
-                // ✅ Tạo sản phẩm
-                Product::factory(10)->create(); // 10 sản phẩm
+        // ✅ Tạo sản phẩm
+        Product::factory(100)->create(); // 10 sản phẩm
+
+        // ✅ Tạo biến thể sản phẩm
+        ProductVariant::factory(30)->create(); // 30 biến thể sản phẩm (color, size, price)
+
+        // ✅ Tạo giỏ hàng
+        Cart::factory(5)->create(); // 5 giỏ hàng
         
-                // ✅ Tạo biến thể sản phẩm
-                ProductVariant::factory(30)->create(); // 30 biến thể sản phẩm (color, size, price)
+        // ✅ Thêm sản phẩm vào giỏ hàng
+        CartItem::factory(15)->create(); // 15 sản phẩm trong giỏ
+
+        // ✅ Tạo voucher
+        Voucher::factory(5)->create();
+        // ✅ Tạo đơn hàng
+        Order::factory(10)->create(); // 10 đơn hàng
         
-                // ✅ Tạo giỏ hàng
-                Cart::factory(5)->create(); // 5 giỏ hàng
-                
-                // ✅ Thêm sản phẩm vào giỏ hàng
-                CartItem::factory(15)->create(); // 15 sản phẩm trong giỏ
-        
-                // ✅ Tạo voucher
-                Voucher::factory(5)->create();
-                // ✅ Tạo đơn hàng
-                Order::factory(10)->create(); // 10 đơn hàng
-                
-                // ✅ Thêm sản phẩm vào đơn hàng
-                OrderItem::factory(30)->create(); // 30 sản phẩm trong các đơn hàng
+        // ✅ Thêm sản phẩm vào đơn hàng
+        OrderItem::factory(30)->create(); // 30 sản phẩm trong các đơn hàng
     }
 }

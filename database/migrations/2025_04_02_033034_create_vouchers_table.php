@@ -14,10 +14,15 @@ return new class extends Migration
         Schema::create('vouchers', function (Blueprint $table) {
             $table->id();
             $table->string('code')->unique(); // Mã giảm giá
-            $table->enum('type', ['fixed', 'percentage']); // Loại giảm giá (cố định hoặc theo %)
-            $table->decimal('value', 10, 2); // Giá trị giảm
-            $table->dateTime('expires_at')->nullable(); // Thời hạn sử dụng
-            $table->integer('usage_limit')->nullable(); // Số lần có thể sử dụng
+            $table->enum('type', ['fixed', 'percentage']); // Loại giảm giá
+            $table->decimal('value', 10, 2); // Giá trị giảm (VNĐ hoặc %)
+            $table->decimal('min_order_amount', 10, 2)->default(0); // Đơn hàng tối thiểu
+            $table->dateTime('expires_at')->nullable(); // Hạn sử dụng
+            $table->integer('usage_limit')->nullable(); // Số lượt sử dụng tối đa
+            $table->integer('used_count')->default(0); // Đã sử dụng bao nhiêu lần
+            $table->boolean('is_active')->default(true); // Voucher đang được sử dụng?
+            $table->integer('per_user_limit')->nullable(); // Số lần tối đa mỗi user được sử dụng
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null'); // Nếu dành riêng cho 1 user
             $table->timestamps();
         });
     }

@@ -9,4 +9,22 @@ class Order extends Model
 {
     /** @use HasFactory<\Database\Factories\OrderFactory> */
     use HasFactory;
+    protected $fillable = [
+        'user_id',
+        'total_price',
+        'status',
+        'voucher_id',
+    ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+    public function voucher()
+    {
+        return $this->belongsTo(Voucher::class);
+    }
 }
