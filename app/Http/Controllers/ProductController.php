@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -13,6 +15,8 @@ class ProductController extends Controller
     public function index()
     {
         //
+        $products = Product::with('category')->paginate(10);
+        return view('admin.products.index',compact('products'));
     }
 
     /**
@@ -21,6 +25,8 @@ class ProductController extends Controller
     public function create()
     {
         //
+        $categories = Category::all();
+        return view('admin.products.create',compact('categories'));
     }
 
     /**
@@ -29,6 +35,25 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'category_id'=>'required|exists:categories,id',
+            'name'=>'required|string|max:255',
+            'description'=>'nullable|string',
+            'base_price'=>'required|numeric',
+            'image'=>'nullable|image|mimes:jpg,png,jpeg|max:2048',
+        ]);
+        $imagePath = 'products/product_default.jpg';
+        if($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('products','public');
+        }
+        Product::create([
+            'category_id'=>$request->category_id,
+            'name'=>$request->name,
+            'description'=>$request->description,
+            'base_price'=>$request->base_price,
+            'image'=>$imagePath,
+        ]);
+        return redirect()->route('products.index')->with('success','Thêm mới sản phẩm thành công');
     }
 
     /**
@@ -37,6 +62,9 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         //
+        // $product::with('variants')
+        $variants = $product->variants;
+        return view('admin.products.show', compact('product','variants'));
     }
 
     /**
@@ -45,6 +73,9 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         //
+        $categories = Category::all();
+        $variants = $product->variants;
+        return view('admin.products.edit',compact('product','categories','variants'));
     }
 
     /**
@@ -53,6 +84,24 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         //
+        $request->validate([
+            'category_id' => 'required|exists:categories,id',
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'base_price' => 'required|numeric',
+            'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048', 
+        ]);
+        if($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('products','public');
+            $product->update(['image'=>$imagePath]);
+        }
+        $product->update([
+            'category_id' => $request->category_id,
+            'name' => $request->name,
+            'description' => $request->description,
+            'base_price' => $request->base_price,
+        ]);
+        return redirect()->route('products.index')->with('success','Cập nhật sản phẩm thành công');
     }
 
     /**
@@ -61,5 +110,23 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
+        $product_default = 'products/product_default.jpg';
+        if($product->image && $product->image !== $product_default) {
+            Storage::disk('public')->delete($product->image);
+        }
+        $product->delete();
+        return redirect()->route('products.index')->with('success','Xóa sản phẩm thành công');
+    }
+
+    public function top4new()
+    {
+        $products = Product::latest()->paginate(12);
+        return view('client.products.index',compact('products'));
+    }
+
+    public function getProductList()
+    {
+        $products = Product::latest()->paginate(12);
+        return view('client.products.index',compact('products'));
     }
 }

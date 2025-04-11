@@ -13,6 +13,8 @@ class CategoryController extends Controller
     public function index()
     {
         //
+        $categories = Category::orderBy('created_at', 'desc')->paginate(15);
+        return view('admin.categories.index', compact('categories'));
     }
 
     /**
@@ -21,6 +23,7 @@ class CategoryController extends Controller
     public function create()
     {
         //
+        return view('admin.categories.create');
     }
 
     /**
@@ -29,6 +32,13 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'name'=>'required|string|max:255|unique:categories,name',
+        ]);
+        Category::create([
+            'name'=>$request->name,
+        ]);
+        return redirect()->route('categories.index')->with('success','Thêm danh mục thành công');
     }
 
     /**
@@ -61,5 +71,7 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         //
+        $category->delete();
+        return redirect()->route('categories.index')->with('success','Xóa danh mục thành công');
     }
 }

@@ -13,6 +13,8 @@ class OrderController extends Controller
     public function index()
     {
         //
+        $orders = Order::with('user')->latest()->paginate();
+        return view('admin.orders.index',compact('orders'));
     }
 
     /**
@@ -45,6 +47,7 @@ class OrderController extends Controller
     public function edit(Order $order)
     {
         //
+        return view('admin.orders.edit',compact('order'));
     }
 
     /**
@@ -53,6 +56,19 @@ class OrderController extends Controller
     public function update(Request $request, Order $order)
     {
         //
+        $validStatus = ['pending','processing','shipped','delivered','canceled'];
+        $request->validate([
+            'status'=>'required|string|in:'. implode(',',$validStatus),
+        ]);
+        // đảo ngược key và value
+        $statusIndex = array_flip($validStatus);
+        if($statusIndex[$request->status]<=$statusIndex[$order->status]) {
+            return back()->with('error','Không thể quay lại trạng thái trước đó');
+        }
+        $order->update([
+            'status'=>$request->status,
+        ]);
+        return back()->with('success','Thay đổi thành công');
     }
 
     /**

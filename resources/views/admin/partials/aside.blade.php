@@ -21,9 +21,9 @@
             <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
                 {{-- Tag --}}
                 <li class="nav-item">
-                    <a href="../generate/theme.html" class="nav-link">
+                    <a href="{{route('dashboard')}}" class="nav-link">
                         <i class="nav-icon bi bi-palette"></i>
-                        <p>Trang chủ</p>
+                        <p>Dashboard</p>
                     </a>
                 </li>
                 {{-- End Tag --}}

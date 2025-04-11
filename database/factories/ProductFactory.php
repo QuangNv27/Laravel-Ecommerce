@@ -22,7 +22,7 @@ class ProductFactory extends Factory
             'name' => $this->faker->words(3, true), // Tạo tên sản phẩm ngẫu nhiên
             'description' => $this->faker->optional()->sentence(),
             'base_price' => $this->faker->randomFloat(2, 10, 1000), // Giá từ 10 đến 1000
-            'image' => $this->faker->optional()->imageUrl(400, 400, 'fashion'),
+            'image' => 'products/product_default.jpg',
             'created_at' => now(),
             'updated_at' => now(),
         ];

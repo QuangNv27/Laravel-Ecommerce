@@ -121,6 +121,13 @@
         });
     </script>
     <!--end::OverlayScrollbars Configure-->
+    <script>
+        function toggleVariantForm() {
+            const form = document.getElementById('variantForm');
+            form.style.display = (form.style.display === 'none') ? 'block' : 'none';
+        }
+    </script>
+    <!--end::toggleVariantForm-->
     <!--end::Script-->
 </body>
 <!--end::Body-->

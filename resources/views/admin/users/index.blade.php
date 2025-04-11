@@ -5,8 +5,17 @@
 @section('content')
 <div class="container">
     <h2 class="my-3">Danh sách người dùng</h2>
-
-    <table class="table table-bordered table-striped">
+    {{-- <a href="{{route('users.index')}}" class="btn btn-success">Thêm mới</a> --}}
+    @foreach (['success', 'error'] as $msg)
+    @if (session($msg))
+        <div class="alert alert-{{ $msg == 'error' ? 'danger' : 'success' }}">
+            {{ session($msg) }}
+        </div>
+    @endif
+    @endforeach
+    <table class="table table-bordered table-striped
+    text-center
+    ">
         <thead class="table-dark">
             <tr>
                 <th>ID</th>
@@ -27,10 +36,11 @@
                     @if($user->role == 'admin')
                         <span class="badge bg-danger">Admin</span>
                     @else
-                        <span class="badge bg-primary">User</span>
+                        <span class="badge bg-primary">Client</span>
                     @endif
                 </td>
                 <td>
+                    {{-- {{ $user->status }} --}}
                     @if($user->status == 1)
                         <span class="badge bg-danger">Active</span>
                     @else
@@ -50,5 +60,7 @@
             @endforeach
         </tbody>
     </table>
+    <div class="d-flex justify-content-center mt-4">
+        {{ $users->links('admin.pagination.bootstrap-5') }}
 </div>
 @endsection

@@ -18,6 +18,7 @@ class ProductVariantFactory extends Factory
     public function definition(): array
     {
         return [
+            'name' => $this->faker->words(10, true),
             'product_id' => Product::inRandomOrder()->value('id') ?? Product::factory(),
             'color' => $this->faker->randomElement(['Red', 'Blue', 'Black', 'White', 'Green']),
             'size' => $this->faker->randomElement(['S', 'M', 'L', 'XL', 'XXL']),
