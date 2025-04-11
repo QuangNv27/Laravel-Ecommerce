@@ -35,8 +35,11 @@ Route::prefix('/')->group(function () {
     Route::get('/', function () {return view('client.home');});
     Route::get('product-list', [ProductController::class,'getProductList'])->name('product-list');
     Route::get('contact', function () {return view('client.pages.contact');})->name('contact');
+    Route::get("product-detail/{id}",[ProductController::class,'detail'])->name("variant_detail");
     // Route cart
 });
+
+
 // Auth
 Auth::routes();
 // Route account
@@ -44,6 +47,7 @@ Route::middleware(['auth','role:client,admin'])->group(function () {
     Route::get('/profile', [ClientController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ClientController::class, 'update'])->name('profile.update');
     Route::put('/profile/change-password', [ClientController::class, 'changePassword'])->name('profile.change-password');
+    Route::post('add-cart/{product_id}/{variant_id}/{user_id}/{price}',[CartController::class,'store'])->name("addCart");
 });
 // Others
 Route::get('/temp-page', [App\Http\Controllers\HomeController::class, 'index'])

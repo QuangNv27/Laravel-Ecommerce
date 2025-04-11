@@ -173,20 +173,40 @@
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
+        <?php
+         use App\Models\Cart;
+                        use App\Models\CartItem;
+                    ?>
+                    @if (Auth::user())
+                    <?php 
+                    $cart = Cart::where("user_id",Auth::user()->id)->where("status","active")->first();
+                    // var_dump($cart);
+                    $cart_id = $cart->id;
+                    $cart_items = CartItem::where("cart_id",$cart_id)->get();
+                    $carts = Cart::with('items')->find($cart_id)->first();
+                    // var_dump($carts);
+                    ?>
+
+                    ({{count($cart_items)}})
+                    @else
+                    (0)
+                    @endif
         <div class="order-md-last">
             <h4 class="d-flex justify-content-between align-items-center mb-3">
                 <span class="text-primary">Your cart</span>
-                <span class="badge bg-primary rounded-pill">3</span>
+                <span class="badge bg-primary rounded-pill">{{count($cart_items)}}</span>
             </h4>
             <ul class="list-group mb-3">
+                @foreach ($carts->items as $item)
                 <li class="list-group-item d-flex justify-content-between lh-sm">
                     <div>
-                        <h6 class="my-0">Growers cider</h6>
-                        <small class="text-body-secondary">Brief description</small>
+                        <h6 class="my-0">{{$item->variant->name}}</h6>
                     </div>
-                    <span class="text-body-secondary">$12</span>
+                    <span class="text-body-secondary">${{$item->variant->price}}</span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between lh-sm">
+                @endforeach
+                
+                {{-- <li class="list-group-item d-flex justify-content-between lh-sm">
                     <div>
                         <h6 class="my-0">Fresh grapes</h6>
                         <small class="text-body-secondary">Brief description</small>
@@ -203,7 +223,7 @@
                 <li class="list-group-item d-flex justify-content-between">
                     <span>Total (USD)</span>
                     <strong>$20</strong>
-                </li>
+                </li> --}}
             </ul>
 
             <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to Checkout</button>
@@ -333,7 +353,7 @@
                                         <a href="index.html" class="dropdown-item item-anchor">About </a>
                                     </li>
                                     <li>
-                                        <a href="index.html" class="dropdown-item item-anchor">Cart </a>
+                                        <a href="carts" class="dropdown-item item-anchor">Cart </a>
                                     </li>
                                     <li>
                                         <a href="index.html" class="dropdown-item item-anchor">Checkout </a>
@@ -415,10 +435,30 @@
                                 class="wishlist-count">(0)</span>
                         </a>
                     </li>
+                    <?php
+                    // use App\Models\Cart;
+                    //     use App\Models\CartItem;
+                    ?>
                     <li class="d-none d-lg-block">
-                        <a href="index.html" class="text-uppercase mx-3" data-bs-toggle="offcanvas"
+                        <a href="/carts" class="text-uppercase mx-3" data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">Cart <span
-                                class="cart-count">(0)</span>
+                                class="cart-count">
+                            
+                            @if (Auth::user())
+                            <?php 
+                            $cart = Cart::where("user_id",Auth::user()->id)->where("status","active")->first();
+                            // var_dump($cart);
+                            $cart_id = $cart->id;
+                            $cart_items = CartItem::where("cart_id",$cart_id)->get();
+
+                            ?>
+
+                            ({{count($cart_items)}})
+                            @else
+                            (0)
+                            @endif
+                            
+                            </span>
                         </a>
                     </li>
                     <li class="d-lg-none">

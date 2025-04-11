@@ -66,7 +66,13 @@ class ProductController extends Controller
         $variants = $product->variants;
         return view('admin.products.show', compact('product','variants'));
     }
-
+    public function detail(string $id){
+        $product = Product::with(['category', 'variants'])->where('id', $id)->first();
+        // var_dump($product);
+        // var_dump($product->variants);
+        return view("client.products.detail", compact('product'));
+    }
+    
     /**
      * Show the form for editing the specified resource.
      */
@@ -126,7 +132,7 @@ class ProductController extends Controller
 
     public function getProductList()
     {
-        $products = Product::latest()->paginate(12);
+        $products = Product::orderBy("id","DESC")->paginate(12);
         return view('client.products.index',compact('products'));
     }
 }

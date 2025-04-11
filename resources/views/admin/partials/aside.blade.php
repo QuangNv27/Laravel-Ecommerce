@@ -50,6 +50,7 @@
                         <p>Product</p>
                     </a>
                 </li>
+
                 {{-- End Tag --}}
                 {{-- Tag --}}
                 <li class="nav-item">
@@ -58,16 +59,22 @@
                         <p>Order</p>
                     </a>
                 </li>
+                {{-- <li class="nav-item">
+                    <a href="{{route('orders.index')}}" class="nav-link">
+                        <i class="nav-icon bi bi-palette"></i>
+                        <p>Order</p>
+                    </a>
+                </li> --}}
                 {{-- End Tag --}}
                 {{-- Tag --}}
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="{{route('vouchers.index')}}" class="nav-link">
                         <i class="nav-icon bi bi-palette"></i>
                         <p>Voucher</p>
                     </a>
-                </li>
+                </li> --}}
                 {{-- End Tag --}}
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon bi bi-speedometer"></i>
                         <p>
@@ -95,7 +102,7 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
             </ul>
             <!--end::Sidebar Menu-->
         </nav>
