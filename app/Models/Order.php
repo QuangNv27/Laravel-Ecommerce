@@ -14,6 +14,9 @@ class Order extends Model
         'total_price',
         'status',
         'voucher_id',
+        "final_total",
+        "discount_amount",
+        "shipping_fee",
     ];
     public function user()
     {

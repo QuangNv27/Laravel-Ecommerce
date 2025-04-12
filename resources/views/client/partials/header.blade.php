@@ -176,25 +176,41 @@
         <?php
          use App\Models\Cart;
                         use App\Models\CartItem;
+                        $cart_items = [];
+                    $carts = new \stdClass();
+                    $carts->items = [];
+                    $cart_items = [];
                     ?>
                     @if (Auth::user())
                     <?php 
-                    $cart = Cart::where("user_id",Auth::user()->id)->where("status","active")->first();
+                    
+                    if (Auth::check()) {
+                        $cart = Cart::where("user_id", Auth::id())->where("status", "active")->first();
+
+                        if ($cart && $cart->items->count() > 0){
+                            $cart_id = $cart->id;
+                            $cart_items = CartItem::with('variant')->where("cart_id", $cart_id)->get();
+                            $carts = Cart::with('items.variant')->find($cart_id);
+                        }
+                    }
                     // var_dump($cart);
-                    $cart_id = $cart->id;
-                    $cart_items = CartItem::where("cart_id",$cart_id)->get();
-                    $carts = Cart::with('items')->find($cart_id)->first();
+                    
+                    
+                    
                     // var_dump($carts);
                     ?>
 
                     ({{count($cart_items)}})
+                    
                     @else
                     (0)
                     @endif
         <div class="order-md-last">
             <h4 class="d-flex justify-content-between align-items-center mb-3">
                 <span class="text-primary">Your cart</span>
-                <span class="badge bg-primary rounded-pill">{{count($cart_items)}}</span>
+                <span class="badge bg-primary rounded-pill">
+                    {{count($cart_items)}}
+                </span>
             </h4>
             <ul class="list-group mb-3">
                 @foreach ($carts->items as $item)
@@ -225,8 +241,8 @@
                     <strong>$20</strong>
                 </li> --}}
             </ul>
-
-            <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to Checkout</button>
+            <a class="w-100 btn btn-primary btn-lg" href="/checkout">Continue to Checkout</a>
+            {{-- <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to Checkout</button> --}}
         </div>
     </div>
 </div>
@@ -446,11 +462,19 @@
                             
                             @if (Auth::user())
                             <?php 
-                            $cart = Cart::where("user_id",Auth::user()->id)->where("status","active")->first();
-                            // var_dump($cart);
-                            $cart_id = $cart->id;
-                            $cart_items = CartItem::where("cart_id",$cart_id)->get();
+                            $cart_items = [];
+                    $carts = new \stdClass();
+                    $carts->items = [];
 
+                    if (Auth::check()) {
+                        $cart = Cart::where("user_id", Auth::id())->where("status", "active")->first();
+
+                        if ($cart && $cart->items->count() > 0){
+                            $cart_id = $cart->id;
+                            $cart_items = CartItem::with('variant')->where("cart_id", $cart_id)->get();
+                            $carts = Cart::with('items.variant')->find($cart_id);
+                        }
+                    }
                             ?>
 
                             ({{count($cart_items)}})

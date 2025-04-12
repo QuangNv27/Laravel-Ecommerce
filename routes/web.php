@@ -48,6 +48,9 @@ Route::middleware(['auth','role:client,admin'])->group(function () {
     Route::put('/profile', [ClientController::class, 'update'])->name('profile.update');
     Route::put('/profile/change-password', [ClientController::class, 'changePassword'])->name('profile.change-password');
     Route::post('add-cart/{product_id}/{variant_id}/{user_id}/{price}',[CartController::class,'store'])->name("addCart");
+    Route::get('checkout',[OrderController::class,'checkout'])->name('checkout');
+    Route::post('checkout',[OrderController::class,'checkout'])->name('checkout');
+    Route::get("/checkout/{id}",[OrderController::class,'detail'])->name("checkout_detail");
 });
 // Others
 Route::get('/temp-page', [App\Http\Controllers\HomeController::class, 'index'])
