@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreignId('voucher_id')->constrained()->onDelete('cascade');
             $table->integer('used_times')->default(0);
             $table->timestamps();
-    
             $table->unique(['user_id', 'voucher_id']);
         });
     }

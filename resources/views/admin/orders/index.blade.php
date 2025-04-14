@@ -9,6 +9,7 @@
             <th>ID</th>
             <th>Khách hàng</th>
             <th>Tổng tiền</th>
+            <th>Voucher</th>
             <th>Trạng thái</th>
             <th>Ngày đặt</th>
             <th>Hành động</th>
@@ -19,7 +20,16 @@
         <tr>
             <td>{{ $order->id }}</td>
             <td>{{ $order->user->name ?? '---' }}</td>
-            <td>{{ number_format($order->total_price) }}₫</td>
+            <td>${{ number_format($order->final_total) }}</td>
+            <td>
+                @if($order->voucher_id)
+                    @if($order->voucher->type=='fixed')
+                        Fixed
+                    @else
+                        Percentage
+                    @endif
+                @endif
+            </td>
             <td>{{ ucfirst($order->status) }}</td>
             <td>{{ $order->created_at->format('d/m/Y H:i') }}</td>
             <td 
