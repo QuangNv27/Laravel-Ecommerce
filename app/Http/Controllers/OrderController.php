@@ -61,8 +61,10 @@ class OrderController extends Controller
         
     }
     public function detail(string $id){
-        $order_items = OrderItem::where('id',$id)->get();
-        return view('client.order.detail',compact('order_items'));
+        $order_items = OrderItem::with("variant")->where('order_id',$id)->get();
+        // var_dump($order_items->variant);
+        // var_dump($order_items);
+        return view('client.order.detail',compact('order_items','id'));
     }
 
     /**

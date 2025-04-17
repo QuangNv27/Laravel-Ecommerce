@@ -36,7 +36,7 @@
             <input type="text" disabled value="{{$cart->total_amount + 15000}}">
         </div>
         <div>
-            <button>Thanh toán</button>
+            <button class="btn">Thanh toán</button>
         </div>
     </form>
     @endif
