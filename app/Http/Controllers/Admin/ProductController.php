@@ -1,14 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Controller;
+
 
 class ProductController extends Controller
 {
+    // ---------ADMIN----------
     /**
      * Display a listing of the resource.
      */
@@ -117,7 +120,7 @@ class ProductController extends Controller
         $product->delete();
         return redirect()->route('products.index')->with('success','Xóa sản phẩm thành công');
     }
-
+    // ---------CLIENT----------
     public function top4new()
     {
         $products = Product::latest()->paginate(12);
@@ -128,5 +131,12 @@ class ProductController extends Controller
     {
         $products = Product::latest()->paginate(12);
         return view('client.products.index',compact('products'));
+    }
+    public function clientShow($id)
+    {
+        // Tìm sản phẩm theo ID, đồng thời lấy các biến thể liên quan
+        $product = Product::with('variants')->findOrFail($id);
+
+        return view('client.products.show', compact('product'));
     }
 }

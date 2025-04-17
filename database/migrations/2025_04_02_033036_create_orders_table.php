@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
     
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+
+            // Địa chỉ
+            $table->text('shipping_address');
     
             // Tổng tiền trước giảm
             $table->decimal('total_price', 10, 2);

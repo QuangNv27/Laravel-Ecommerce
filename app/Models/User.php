@@ -33,12 +33,26 @@ class User extends Authenticatable
         ];
     }
     // Kiểm tra role người dùng
-    public function isRoleAdmin() 
+    public function isRoleAdmin()
     {
         return $this->role === self::ROLE_ADMIN;
     }
     public function order()
     {
         return $this->hasMany(Order::class);
+    }
+    public function cart()
+    {
+        return $this->hasOne(Cart::class);
+    }
+    public function vouchers()
+    {
+        return $this->belongsToMany(Voucher::class, 'user_voucher')
+            ->withPivot('used_times')
+            ->withTimestamps();
+    }
+    public function userVouchers()
+    {
+        return $this->hasMany(UserVoucher::class);
     }
 }

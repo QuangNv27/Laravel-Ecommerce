@@ -15,7 +15,7 @@
         @endif
     @endforeach
 
-    <table class="table table-bordered text-center ">
+    <table class="table table-bordered text-center table-striped">
         <thead class="table-dark">
             <tr>
                 <th>ID</th>

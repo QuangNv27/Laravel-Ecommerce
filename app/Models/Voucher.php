@@ -9,4 +9,26 @@ class Voucher extends Model
 {
     /** @use HasFactory<\Database\Factories\VoucherFactory> */
     use HasFactory;
+    protected $fillable = [
+        'code',
+        'type',
+        'value',
+        'min_order_amount',
+        'expires_at',
+        'usage_limit',
+        'used_count',
+        'is_active',
+        'per_user_limit',
+        'user_id',
+    ];
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_voucher')
+            ->withPivot('used_times')
+            ->withTimestamps();
+    }
+    public function userVouchers()
+    {
+        return $this->hasMany(UserVoucher::class);
+    }
 }

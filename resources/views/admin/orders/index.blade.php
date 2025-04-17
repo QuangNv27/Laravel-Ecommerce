@@ -3,7 +3,7 @@
 @section('content')
 <h1>Danh sách đơn hàng</h1>
 
-<table class="table table-bordered text-center">
+<table class="table table-bordered text-center table-striped">
     <thead class="table-dark">
         <tr>
             <th>ID</th>

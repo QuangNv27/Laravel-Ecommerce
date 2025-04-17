@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Product;
 use App\Models\ProductVariant;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
 
 class ProductVariantController extends Controller
 {

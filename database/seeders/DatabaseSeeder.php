@@ -26,8 +26,14 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
-            'password'=>12121212,
+            'password'=>bcrypt('12121212'),
             'role'=>'admin',
+        ]);
+        User::factory()->create([
+            'name' => 'Client User',
+            'email' => 'client@example.com',
+            'password'=>bcrypt('12121212'),
+            'role'=>'client',
         ]);
         // ✅ Tạo tài khoản admin + user
         User::factory(5)->create(); // 5 tài khoản ngẫu nhiên
@@ -36,10 +42,15 @@ class DatabaseSeeder extends Seeder
         Category::factory(3)->create(); // 3 danh mục sản phẩm
         
         // ✅ Tạo sản phẩm
-        Product::factory(100)->create(); // 10 sản phẩm
+        Product::factory(100)->create()->each(function ($product) {
+            // Tạo 3 biến thể cho mỗi sản phẩm
+            ProductVariant::factory()->count(3)->create([
+                'product_id' => $product->id,
+            ]);
+        }); // 10 sản phẩm
 
         // ✅ Tạo biến thể sản phẩm
-        ProductVariant::factory(30)->create(); // 30 biến thể sản phẩm (color, size, price)
+        // ProductVariant::factory(30)->create(); // 30 biến thể sản phẩm (color, size, price)
 
         // ✅ Tạo giỏ hàng
         Cart::factory(5)->create(); // 5 giỏ hàng
