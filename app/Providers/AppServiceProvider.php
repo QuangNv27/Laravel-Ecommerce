@@ -20,5 +20,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+        view()->composer('client.partials.header', function ($view) {
+            $view->with('categories', \App\Models\Category::all());
+        });
     }
 }

@@ -38,32 +38,31 @@ class DatabaseSeeder extends Seeder
         // ✅ Tạo tài khoản admin + user
         User::factory(5)->create(); // 5 tài khoản ngẫu nhiên
 
-        // ✅ Tạo danh mục sản phẩm
-        Category::factory(3)->create(); // 3 danh mục sản phẩm
-        
-        // ✅ Tạo sản phẩm
-        Product::factory(100)->create()->each(function ($product) {
-            // Tạo 3 biến thể cho mỗi sản phẩm
-            ProductVariant::factory()->count(3)->create([
-                'product_id' => $product->id,
-            ]);
-        }); // 10 sản phẩm
+        // Category::factory(3)->create();
+        // Product::factory(100)->create()->each(function ($product) {
+        //     ProductVariant::factory()->count(3)->create([
+        //         'product_id' => $product->id,
+        //     ]);
+        // });
+        // Hoặc
+        $this->call([
+            CategorySeeder::class,
+            ProductSeeder::class,
+        ]);
 
-        // ✅ Tạo biến thể sản phẩm
-        // ProductVariant::factory(30)->create(); // 30 biến thể sản phẩm (color, size, price)
 
         // ✅ Tạo giỏ hàng
-        Cart::factory(5)->create(); // 5 giỏ hàng
+        // Cart::factory(5)->create(); // 5 giỏ hàng
         
         // ✅ Thêm sản phẩm vào giỏ hàng
-        CartItem::factory(15)->create(); // 15 sản phẩm trong giỏ
+        // CartItem::factory(15)->create(); // 15 sản phẩm trong giỏ
 
         // ✅ Tạo voucher
-        Voucher::factory(5)->create();
+        // Voucher::factory(5)->create();
         // ✅ Tạo đơn hàng
-        Order::factory(10)->create(); // 10 đơn hàng
+        // Order::factory(10)->create(); // 10 đơn hàng
         
         // ✅ Thêm sản phẩm vào đơn hàng
-        OrderItem::factory(30)->create(); // 30 sản phẩm trong các đơn hàng
+        // OrderItem::factory(30)->create(); // 30 sản phẩm trong các đơn hàng
     }
 }

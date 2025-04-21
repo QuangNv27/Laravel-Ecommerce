@@ -11,6 +11,7 @@ use App\Http\Controllers\Client\CartItemController;
 use App\Http\Controllers\Client\CheckoutController;
 use App\Http\Controllers\Client\ClientController;
 use App\Http\Controllers\Client\ClientOrderController;
+use App\Http\Controllers\Client\WishlistController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,7 @@ Route::middleware('auth','role:admin')->prefix('admin')->group(function () {
 Route::prefix('/')->group(function () {
     Route::get('/', [ProductController::class,'getProductList'])->name('product-list');
     Route::get('product/{id}', [ProductController::class,'clientShow'])->name('clientShowProduct');
+    // Route::get('/category/{slug}', [ProductController::class, 'getByCategory'])->name('product.category');
     Route::get('contact', function () {return view('client.pages.contact');})->name('contact');
 });
 // Route Auth 
@@ -81,6 +83,12 @@ Route::middleware(['auth', 'role:client,admin'])->group(function () {
         Route::post('/place-order', [ClientOrderController::class, 'placeOrder'])->name('place');
         Route::get('/', [ClientOrderController::class, 'index'])->name('index');
         Route::post('/{id}/cancel', [ClientOrderController::class, 'cancelOrder'])->name('cancel');
+    });
+    // WishList
+    Route::prefix('wishlist')->as('wishlist.')->group(function () {
+    Route::get('/', [WishlistController::class, 'index'])->name('index');
+    Route::post('/{productId}/add', [WishlistController::class, 'add'])->name('add');
+    Route::post('/{productId}/remove', [WishlistController::class, 'remove'])->name('remove');
     });
 });
 

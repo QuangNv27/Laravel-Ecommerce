@@ -129,9 +129,27 @@
 <div class="search-popup">
     <div class="search-popup-container">
 
-        <form role="search" method="get" class="form-group" action="">
+        <form role="search" method="get" class="form-group" action="{{ route('product-list') }}">
             <input type="search" id="search-form" class="form-control border-0 border-bottom"
-                placeholder="Type and press enter" value="" name="s" />
+                placeholder="Type and press enter" value="{{ request('s') }}" name="s" />
+            <!-- Hidden input để giữ giá trị category khi tìm kiếm -->
+            <!-- Dropdown để chọn category -->
+            <select name="category" class="form-control border-0 border-bottom mt-3">
+                <option value="" {{ !request('category') ? 'selected' : '' }}>Tất cả</option>
+                @foreach ($categories as $category)
+                    <option value="{{ $category->slug }}"
+                        {{ request('category') === $category->slug ? 'selected' : '' }}>
+                        {{ $category->name }}
+                    </option>
+                @endforeach
+            </select>
+            <!-- Lọc theo giá -->
+            <div class="price-filter mt-3">
+                <input type="number" class="form-control border-0 border-bottom" name="min_price"
+                    placeholder="Min Price" value="{{ request('min_price') }}" />
+                <input type="number" class="form-control border-0 border-bottom" name="max_price"
+                    placeholder="Max Price" value="{{ request('max_price') }}" />
+            </div>
             <button type="submit" class="search-submit border-0 position-absolute bg-white"
                 style="top: 15px;right: 15px;"><svg class="search" width="24" height="24">
                     <use xlink:href="#search"></use>
@@ -141,27 +159,15 @@
         <h5 class="cat-list-title">Browse Categories</h5>
 
         <ul class="cat-list">
-            <li class="cat-list-item">
-                <a href="#" title="Jackets">Jackets</a>
+            <li class="cat-list-item {{ request()->get('category') ? '' : 'active' }}">
+                <a href="{{ route('product-list') }}" title="Tất cả">Tất cả</a>
             </li>
-            <li class="cat-list-item">
-                <a href="#" title="T-shirts">T-shirts</a>
-            </li>
-            <li class="cat-list-item">
-                <a href="#" title="Handbags">Handbags</a>
-            </li>
-            <li class="cat-list-item">
-                <a href="#" title="Accessories">Accessories</a>
-            </li>
-            <li class="cat-list-item">
-                <a href="#" title="Cosmetics">Cosmetics</a>
-            </li>
-            <li class="cat-list-item">
-                <a href="#" title="Dresses">Dresses</a>
-            </li>
-            <li class="cat-list-item">
-                <a href="#" title="Jumpsuits">Jumpsuits</a>
-            </li>
+            @foreach ($categories as $category)
+                <li class="cat-list-item {{ request()->get('category') === $category->slug ? 'active' : '' }}">
+                    <a href="{{ route('product-list', ['category' => $category->slug, 's' => request('s')]) }}"
+                        title="{{ $category->name }}">{{ $category->name }}</a>
+                </li>
+            @endforeach
         </ul>
 
     </div>
@@ -169,7 +175,7 @@
 
 <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasCart"
     aria-labelledby="My Cart">
-    <div class="offcanvas-header justify-content-center">
+    {{-- <div class="offcanvas-header justify-content-center">
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
@@ -208,7 +214,7 @@
 
             <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to Checkout</button>
         </div>
-    </div>
+    </div> --}}
 </div>
 
 <nav class="navbar navbar-expand-lg bg-light text-uppercase fs-6 p-3 border-bottom align-items-center">
@@ -244,8 +250,9 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link 
                                 {{-- dropdown-toggle --}}
-                                 active" href="#" id="dropdownHome"
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Home</a>
+                                 active"
+                                    href="#" id="dropdownHome" data-bs-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">Home</a>
                                 <ul class="dropdown-menu list-unstyled" aria-labelledby="dropdownHome">
                                     <li>
                                         <a href="index.html" class="dropdown-item item-anchor">Home Layout 1</a>
@@ -264,12 +271,9 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link 
                                 {{-- dropdown-toggle --}}
-                                " href="#" 
-                                id="dropdownShop"
-                                data-bs-toggle="dropdown" 
-                                aria-haspopup="true" 
-                                aria-expanded="false"
-                                >Shop</a>
+                                "
+                                    href="#" id="dropdownShop" data-bs-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">Shop</a>
                                 {{-- <ul class="dropdown-menu list-unstyled" aria-labelledby="dropdownShop">
                                     <li>
                                         <a href="index.html" class="dropdown-item item-anchor">Shop Sidebar </a>
@@ -306,8 +310,9 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link 
                                 {{-- dropdown-toggle --}}
-                                " href="#" id="dropdownBlog"
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog</a>
+                                "
+                                    href="#" id="dropdownBlog" data-bs-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">Blog</a>
                                 <ul class="dropdown-menu list-unstyled" aria-labelledby="dropdownBlog">
                                     <li>
                                         <a href="index.html" class="dropdown-item item-anchor">Blog Classic </a>
@@ -338,8 +343,9 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link 
                                 {{-- dropdown-toggle --}}
-                                " href="#" id="dropdownPages"
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
+                                "
+                                    href="#" id="dropdownPages" data-bs-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">Pages</a>
                                 <ul class="dropdown-menu list-unstyled" aria-labelledby="dropdownPages">
                                     <li>
                                         <a href="index.html" class="dropdown-item item-anchor">About </a>
@@ -354,7 +360,8 @@
                                         <a href="index.html" class="dropdown-item item-anchor">Coming Soon </a>
                                     </li>
                                     <li>
-                                        <a href="{{route('contact')}}" class="dropdown-item item-anchor">Contact </a>
+                                        <a href="{{ route('contact') }}" class="dropdown-item item-anchor">Contact
+                                        </a>
                                     </li>
                                     <li>
                                         <a href="index.html" class="dropdown-item item-anchor">Error Page </a>
@@ -377,7 +384,7 @@
                                 <a class="nav-link" href="#">Blog</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('contact')}}">Contact</a>
+                                <a class="nav-link" href="{{ route('contact') }}">Contact</a>
                             </li>
                         </ul>
                     </div>
@@ -407,10 +414,10 @@
                                 {{ Auth::user()->name }}
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                @if(Auth::user()->isRoleAdmin())
-                                    <a class="dropdown-item" href="{{route('dashboard')}}">Trang quản trị</a>
+                                @if (Auth::user()->isRoleAdmin())
+                                    <a class="dropdown-item" href="{{ route('dashboard') }}">Trang quản trị</a>
                                 @endif
-                                <a class="dropdown-item" href="{{route('profile.edit')}}">Profile</a>
+                                <a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                                                          document.getElementById('logout-form').submit();">
@@ -423,15 +430,13 @@
                         </li>
                     @endguest
                     <li class="d-none d-lg-block">
-                        <a href="index.html" class="text-uppercase mx-3">Wishlist <span
-                                class="wishlist-count">(0)</span>
-                        </a>
+                        <a href="{{route('wishlist.index')}}" class="text-uppercase mx-3">Wishlist</a>
                     </li>
                     <li class="d-none d-lg-block">
-                        <a href="index.html" class="text-uppercase mx-3" data-bs-toggle="offcanvas"
-                            data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">Cart <span
-                                class="cart-count">(0)</span>
-                        </a>
+                        <a href="{{route('cart.show')}}" class="text-uppercase mx-3" 
+                        {{-- data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasCart" aria-controls="offcanvasCart" --}}
+                        >Cart</a>
                     </li>
                     <li class="d-lg-none">
                         <a href="#" class="mx-2">

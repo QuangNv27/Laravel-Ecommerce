@@ -3,7 +3,11 @@
 @section('content')
 <div class="container">
     <h2>Giỏ hàng của bạn</h2>
-
+    @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @elseif (session('error'))
+        <div class="alert alert-info">{{ session('error') }}</div>
+    @endif
     @if(!$cart || $cart->cartItem->isEmpty())
         <p>Giỏ hàng đang trống.</p>
     @else
