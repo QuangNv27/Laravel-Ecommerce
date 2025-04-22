@@ -37,15 +37,24 @@ class ClientOrderController extends Controller
             if ($voucher) {
                 $voucher = Voucher::where('code', $voucher['code'])->first();
                 if ($voucher && $voucher->is_active && $voucher->expires_at > now()) {
-                    if ($voucher->type == 'fixed') {
-                        $discount = $voucher->value;
-                    } else {
-                        $discount = $subtotal * ($voucher->value / 100);
-                    }
                     if ($voucher->min_order_amount && $subtotal < $voucher->min_order_amount) {
                         $discount = 0;
                     } else {
+                        // Kiểm tra per_user_limit
+                        $userVoucher = UserVoucher::where('user_id',$user->id)
+                        ->where('voucher_id',$voucher->id)
+                        ->first();
+                        $usedTimes = $userVoucher->used_times ?? 0;
+                        if($voucher->per_user_limit !== null && $usedTimes >= $userVoucher->per_user_limit) {
+                            DB::rollBack();
+                            return back()->with('error','Đạt giới hạn số lượng dùng voucher này cho mỗi user');
+                        }
                         $voucher_id = $voucher->id;
+                        if ($voucher->type == 'fixed') {
+                            $discount = $voucher->value;
+                        } else {
+                            $discount = $subtotal * ($voucher->value / 100);
+                        }
                         // Cập nhật userUsage
                         $voucher->increment('used_count');
                         UserVoucher::updateOrCreate(
@@ -95,12 +104,13 @@ class ClientOrderController extends Controller
             return redirect()->route('order.index')->with('success', 'Đặt hàng thành công');
         } catch (\Exception $e) {
             DB::rollBack();
+            // dd($e->getMessage());
             return back()->with('error', 'Lỗi đặt hàng:' . $e->getMessage());
         }
     }
     public function index()
     {
-        $orders = Auth::user()->order()->with('orderItems.variant.product')->latest()->get();
+        $orders = Auth::user()->order()->with(['orderItems.variant.product'],'voucher')->latest()->get();
         return view('client.orders.index', compact('orders'));
     }
     public function cancelOrder($orderId)

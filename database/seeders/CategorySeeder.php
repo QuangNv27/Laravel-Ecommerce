@@ -15,13 +15,13 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         Category::create([
-            'name' => 'Áo sơ mi',
-            'slug' => 'ao-so-mi',
+            'name' => 'Áo',
+            'slug' => 'ao',
         ]);
 
         Category::create([
-            'name' => 'Quần jeans',
-            'slug' => 'quan-jeans',
+            'name' => 'Quần',
+            'slug' => 'quan',
         ]);
 
         Category::create([
@@ -30,8 +30,8 @@ class CategorySeeder extends Seeder
         ]);
 
         Category::create([
-            'name' => 'Giày thể thao',
-            'slug' => 'giay-the-thao',
+            'name' => 'Giày',
+            'slug' => 'giay',
         ]);
     }
 }

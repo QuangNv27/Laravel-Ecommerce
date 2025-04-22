@@ -43,7 +43,7 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'base_price' => 'required|numeric',
-            'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+            'image' => 'nullable|image|mimes:jpg,png,jpeg,webp|max:2048',
         ]);
         $imagePath = 'products/product_default.jpg';
         if ($request->hasFile('image')) {
@@ -92,7 +92,7 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'base_price' => 'required|numeric',
-            'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+            'image' => 'nullable|image|mimes:jpg,png,jpeg,webp|max:2048',
         ]);
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('products', 'public');

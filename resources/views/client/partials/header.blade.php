@@ -144,10 +144,10 @@
                 @endforeach
             </select>
             <!-- Lọc theo giá -->
-            <div class="price-filter mt-3">
-                <input type="number" class="form-control border-0 border-bottom" name="min_price"
+            <div class="price-filter">
+                <input type="number" class="form-control border-0 border-bottom mt-3" name="min_price"
                     placeholder="Min Price" value="{{ request('min_price') }}" />
-                <input type="number" class="form-control border-0 border-bottom" name="max_price"
+                <input type="number" class="form-control border-0 border-bottom mt-6" name="max_price"
                     placeholder="Max Price" value="{{ request('max_price') }}" />
             </div>
             <button type="submit" class="search-submit border-0 position-absolute bg-white"

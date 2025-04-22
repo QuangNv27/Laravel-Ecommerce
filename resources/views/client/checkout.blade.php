@@ -13,6 +13,7 @@
                 {{ session('success') }}
             </div>
         @endif
+        @include('components.alerts')
         <h2>Xác nhận đơn hàng</h2>
         @if ($cart && $cart->cartItem->count())
             <table class="table">

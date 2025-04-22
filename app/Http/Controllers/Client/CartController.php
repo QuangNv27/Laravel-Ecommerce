@@ -118,8 +118,8 @@ class CartController extends Controller
             return $item->quantity * $item->variant->price;
         });
         $cart->save();
-        // return back()->with('success','Thêm sản phẩm vào giỏ hàng');
-        return redirect()->route('cart.show')->with('success', 'Đã thêm vào giỏ hàng thành công!');
+        // return redirect()->route('cart.show')->with('success', 'Đã thêm vào giỏ hàng thành công!');
+        return back()->with('success', 'Đã thêm vào giỏ hàng thành công!');
     }
     public function show()
     {

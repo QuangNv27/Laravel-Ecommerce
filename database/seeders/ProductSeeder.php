@@ -16,10 +16,10 @@ class ProductSeeder extends Seeder
     public function run()
     {
         // Lấy các category đã tạo
-        $category1 = Category::where('slug', 'ao-so-mi')->first();
-        $category2 = Category::where('slug', 'quan-jeans')->first();
+        $category1 = Category::where('slug', 'ao')->first();
+        $category2 = Category::where('slug', 'quan')->first();
         $category3 = Category::where('slug', 'ao-khoac')->first();
-        $category4 = Category::where('slug', 'giay-the-thao')->first();
+        $category4 = Category::where('slug', 'giay')->first();
 
         // Tạo 10 sản phẩm với 2 biến thể mỗi sản phẩm
 
@@ -29,7 +29,7 @@ class ProductSeeder extends Seeder
             'name' => 'Áo sơ mi nam',
             'description' => 'Áo sơ mi nam chất liệu cotton cao cấp, thoáng mát và dễ chịu.',
             'base_price' => 200000,
-            'image' => 'products/ao_so_mi_nam.jpg',
+            'image' => 'products/1_ao_so_mi_nam.jpg',
         ]);
         ProductVariant::create([
             'product_id' => $product1->id,
@@ -54,7 +54,7 @@ class ProductSeeder extends Seeder
             'name' => 'Quần jeans nam',
             'description' => 'Quần jeans nam thời trang, phù hợp với mọi dịp.',
             'base_price' => 350000,
-            'image' => 'products/quan_jeans_nam.jpg',
+            'image' => 'products/2_quan_jeans_nam.jpg',
         ]);
         ProductVariant::create([
             'product_id' => $product2->id,
@@ -79,7 +79,7 @@ class ProductSeeder extends Seeder
             'name' => 'Áo khoác nam',
             'description' => 'Áo khoác nam chống gió, giữ ấm vào mùa đông.',
             'base_price' => 500000,
-            'image' => 'products/ao_khoac_nam.jpg',
+            'image' => 'products/3_ao_khoac_nam.jpg',
         ]);
         ProductVariant::create([
             'product_id' => $product3->id,
@@ -104,7 +104,7 @@ class ProductSeeder extends Seeder
             'name' => 'Giày thể thao nam',
             'description' => 'Giày thể thao với thiết kế trẻ trung, phù hợp cho mọi hoạt động.',
             'base_price' => 600000,
-            'image' => 'products/giay_the_thao_nam.webp',
+            'image' => 'products/4_giay_the_thao_nam.webp',
         ]);
         ProductVariant::create([
             'product_id' => $product4->id,
@@ -128,7 +128,7 @@ class ProductSeeder extends Seeder
             'name' => 'Áo thun nam',
             'description' => 'Áo thun nam chất liệu cotton, mềm mại và thoải mái.',
             'base_price' => 150000,
-            'image' => 'products/ao_thun_nam.jpg',
+            'image' => 'products/5_ao_thun_nam.jpg',
         ]);
         ProductVariant::create([
             'product_id' => $product5->id,
@@ -153,7 +153,7 @@ class ProductSeeder extends Seeder
             'name' => 'Quần short nam',
             'description' => 'Quần short nam phong cách trẻ trung, thoáng mát.',
             'base_price' => 180000,
-            'image' => 'products/quan_short_nam.jpg',
+            'image' => 'products/6_quan_short_nam.jpg',
         ]);
         ProductVariant::create([
             'product_id' => $product6->id,
@@ -178,7 +178,7 @@ class ProductSeeder extends Seeder
             'name' => 'Áo hoodie nam',
             'description' => 'Áo hoodie nam giữ ấm, phù hợp cho mùa đông.',
             'base_price' => 400000,
-            'image' => 'products/ao_hoodie_nam.jpg',
+            'image' => 'products/7_ao_hoodie_nam.jpg',
         ]);
         ProductVariant::create([
             'product_id' => $product7->id,
@@ -203,7 +203,7 @@ class ProductSeeder extends Seeder
             'name' => 'Giày thể thao nữ',
             'description' => 'Giày thể thao nữ thiết kế trẻ trung, thời trang và thoải mái.',
             'base_price' => 700000,
-            'image' => 'products/giay_the_thao_nu.jpg',
+            'image' => 'products/8_giay_the_thao_nu.jpg',
         ]);
         ProductVariant::create([
             'product_id' => $product8->id,
@@ -228,7 +228,7 @@ class ProductSeeder extends Seeder
             'name' => 'Áo vest nam',
             'description' => 'Áo vest nam lịch lãm, phù hợp với các dịp quan trọng.',
             'base_price' => 800000,
-            'image' => 'products/ao_vest_nam.jpg',
+            'image' => 'products/9_ao_vest_nam.jpg',
         ]);
         ProductVariant::create([
             'product_id' => $product9->id,
@@ -253,7 +253,7 @@ class ProductSeeder extends Seeder
             'name' => 'Quần tây nam',
             'description' => 'Quần tây nam lịch sự, phù hợp với công sở.',
             'base_price' => 400000,
-            'image' => 'products/quan_tay_nam.jpg',
+            'image' => 'products/10_quan_tay_nam.jpg',
         ]);
         ProductVariant::create([
             'product_id' => $product10->id,
@@ -277,7 +277,7 @@ class ProductSeeder extends Seeder
             'name' => 'Áo sơ mi nữ',
             'description' => 'Áo sơ mi nữ, thiết kế tinh tế, phù hợp cho công sở.',
             'base_price' => 250000,
-            'image' => 'products/ao_so_mi_nu.jpg',
+            'image' => 'products/11_ao_so_mi_nu.jpg',
         ]);
         ProductVariant::create([
             'product_id' => $product11->id,
@@ -302,7 +302,7 @@ class ProductSeeder extends Seeder
             'name' => 'Quần kaki nam',
             'description' => 'Quần kaki nam, phù hợp cho cả ngày đi làm và đi chơi.',
             'base_price' => 300000,
-            'image' => 'products/quan_kaki_nam.jpg',
+            'image' => 'products/12_quan_kaki_nam.jpg',
         ]);
         ProductVariant::create([
             'product_id' => $product12->id,
@@ -327,7 +327,7 @@ class ProductSeeder extends Seeder
             'name' => 'Áo len nữ',
             'description' => 'Áo len nữ mềm mại, phù hợp cho mùa đông.',
             'base_price' => 350000,
-            'image' => 'products/ao_len_nu.jpg',
+            'image' => 'products/13_ao_len_nu.jpg',
         ]);
         ProductVariant::create([
             'product_id' => $product13->id,
@@ -352,7 +352,7 @@ class ProductSeeder extends Seeder
             'name' => 'Giày cao gót nữ',
             'description' => 'Giày cao gót nữ, thiết kế sang trọng, thời trang.',
             'base_price' => 600000,
-            'image' => 'products/giay_cao_got_nu.jpg',
+            'image' => 'products/14_giay_cao_got_nu.jpg',
         ]);
         ProductVariant::create([
             'product_id' => $product14->id,
@@ -377,7 +377,7 @@ class ProductSeeder extends Seeder
             'name' => 'Áo khoác nữ',
             'description' => 'Áo khoác nữ phong cách, ấm áp cho mùa đông.',
             'base_price' => 500000,
-            'image' => 'products/ao_khoac_nu.jpg',
+            'image' => 'products/15_ao_khoac_nu.jpg',
         ]);
         ProductVariant::create([
             'product_id' => $product15->id,
@@ -401,7 +401,7 @@ class ProductSeeder extends Seeder
             'name' => 'Áo thun nam',
             'description' => 'Áo thun nam thoải mái, phù hợp cho các buổi dã ngoại và đi chơi.',
             'base_price' => 180000,
-            'image' => 'products/ao_thun_nam.jpg',
+            'image' => 'products/16_ao_thun_nam.jpg',
         ]);
         ProductVariant::create([
             'product_id' => $product16->id,
@@ -426,7 +426,7 @@ class ProductSeeder extends Seeder
             'name' => 'Quần short nam',
             'description' => 'Quần short nam thoải mái cho mùa hè.',
             'base_price' => 220000,
-            'image' => 'products/quan_short_nam.jpg',
+            'image' => 'products/17_quan_short_nam.jpg',
         ]);
         ProductVariant::create([
             'product_id' => $product17->id,
@@ -451,7 +451,7 @@ class ProductSeeder extends Seeder
             'name' => 'Áo len nam',
             'description' => 'Áo len nam ấm áp, phù hợp với mùa đông.',
             'base_price' => 400000,
-            'image' => 'products/ao_len_nam.jpg',
+            'image' => 'products/18_ao_len_nam.jpg',
         ]);
         ProductVariant::create([
             'product_id' => $product18->id,
@@ -476,7 +476,7 @@ class ProductSeeder extends Seeder
             'name' => 'Giày thể thao nam',
             'description' => 'Giày thể thao nam thời trang, phù hợp cho các hoạt động thể thao.',
             'base_price' => 750000,
-            'image' => 'products/giay_the_thao_nam.jpg',
+            'image' => 'products/19_giay_the_thao_nam.jpg',
         ]);
         ProductVariant::create([
             'product_id' => $product19->id,
@@ -501,7 +501,7 @@ class ProductSeeder extends Seeder
             'name' => 'Áo khoác nam',
             'description' => 'Áo khoác nam, thiết kế mạnh mẽ và ấm áp.',
             'base_price' => 600000,
-            'image' => 'products/ao_khoac_nam.jpg',
+            'image' => 'products/20_ao_khoac_nam.jpg',
         ]);
         ProductVariant::create([
             'product_id' => $product20->id,
@@ -525,7 +525,7 @@ class ProductSeeder extends Seeder
             'name' => 'Áo sơ mi nam',
             'description' => 'Áo sơ mi nam lịch lãm, phù hợp cho các buổi họp hoặc tiệc.',
             'base_price' => 350000,
-            'image' => 'products/ao_so_mi_nam.jpg',
+            'image' => 'products/21_ao_so_mi_nam.jpg',
         ]);
         ProductVariant::create([
             'product_id' => $product21->id,
@@ -550,7 +550,7 @@ class ProductSeeder extends Seeder
             'name' => 'Quần jeans nam',
             'description' => 'Quần jeans nam phong cách, thoải mái cho mọi hoạt động.',
             'base_price' => 450000,
-            'image' => 'products/quan_jeans_nam.jpg',
+            'image' => 'products/22_quan_jeans_nam.jpg',
         ]);
         ProductVariant::create([
             'product_id' => $product22->id,
@@ -575,7 +575,7 @@ class ProductSeeder extends Seeder
             'name' => 'Áo vest nam',
             'description' => 'Áo vest nam phù hợp với các buổi tiệc tùng, sự kiện.',
             'base_price' => 700000,
-            'image' => 'products/ao_vest_nam.jpg',
+            'image' => 'products/23_ao_vest_nam.jpg',
         ]);
         ProductVariant::create([
             'product_id' => $product23->id,
@@ -600,7 +600,7 @@ class ProductSeeder extends Seeder
             'name' => 'Giày boot nam',
             'description' => 'Giày boot nam mạnh mẽ, phù hợp với những chuyến đi dài.',
             'base_price' => 850000,
-            'image' => 'products/giay_boot_nam.jpg',
+            'image' => 'products/24_giay_boot_nam.jpg',
         ]);
         ProductVariant::create([
             'product_id' => $product24->id,
@@ -625,7 +625,7 @@ class ProductSeeder extends Seeder
             'name' => 'Áo khoác dạ nam',
             'description' => 'Áo khoác dạ nam, giữ ấm hiệu quả trong mùa đông lạnh giá.',
             'base_price' => 950000,
-            'image' => 'products/ao_khoac_da_nam.jpg',
+            'image' => 'products/25_ao_khoac_da_nam.jpg',
         ]);
         ProductVariant::create([
             'product_id' => $product25->id,
